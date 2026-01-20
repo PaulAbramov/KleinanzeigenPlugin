@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Extension Icons</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .icon-preview { margin: 20px 0; }
+        canvas { border: 1px solid #ccc; margin-right: 10px; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Kleinanzeigen Hider - Icon Generator</h1>
+    <p>Click the buttons below to download the icons, then save them in this folder.</p>
+
+    <div class="icon-preview">
+        <h3>Preview:</h3>
+        <canvas id="icon16" width="16" height="16"></canvas>
+        <canvas id="icon48" width="48" height="48"></canvas>
+        <canvas id="icon128" width="128" height="128"></canvas>
+    </div>
+
+    <div>
+        <button onclick="download(16)">Download icon16.png</button>
+        <button onclick="download(48)">Download icon48.png</button>
+        <button onclick="download(128)">Download icon128.png</button>
+        <button onclick="downloadAll()">Download All</button>
+    </div>
+
+    <script>
+        const sizes = [16, 48, 128];
+
+        function drawIcon(ctx, size) {
+            // Background - Kleinanzeigen green
+            ctx.fillStyle = '#86b817';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.15);
+            ctx.fill();
+
+            // Eye icon
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size * 0.06;
+
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const eyeWidth = size * 0.6;
+            const eyeHeight = size * 0.35;
+
+            // Eye shape
+            ctx.beginPath();
+            ctx.ellipse(centerX, centerY, eyeWidth / 2, eyeHeight / 2, 0, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Pupil
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, size * 0.12, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Strike through (hidden indicator)
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size * 0.08;
+            ctx.beginPath();
+            ctx.moveTo(size * 0.2, size * 0.8);
+            ctx.lineTo(size * 0.8, size * 0.2);
+            ctx.stroke();
+        }
+
+        // Draw all previews
+        sizes.forEach(size => {
+            const canvas = document.getElementById('icon' + size);
+            const ctx = canvas.getContext('2d');
+            drawIcon(ctx, size);
+        });
+
+        function download(size) {
+            const canvas = document.getElementById('icon' + size);
+            const link = document.createElement('a');
+            link.download = `icon${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadAll() {
+            sizes.forEach(size => download(size));
+        }
+    </script>
+</body>
+</html>

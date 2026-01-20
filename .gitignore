@@ -1,0 +1,15 @@
+# Sensitive files
+.mcp.json
+
+# Claude Code files
+.claude/
+
+# Playwright browser data
+.playwright-mcp/
+
+# Personal video project files
+videos/
+
+# OS files
+.DS_Store
+Thumbs.db

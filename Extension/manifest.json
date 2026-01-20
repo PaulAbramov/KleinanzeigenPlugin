@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Kleinanzeigen Ultimate Hider",
+  "version": "2.0.0",
+  "description": "Hide ads, filter by keywords, track contacted ads - with dark mode support",
+  "permissions": ["storage"],
+  "host_permissions": ["*://www.kleinanzeigen.de/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://www.kleinanzeigen.de/s-*"],
+      "exclude_matches": ["*://www.kleinanzeigen.de/s-anzeige/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "kleinanzeigen-hider@example.com",
+      "strict_min_version": "109.0"
+    }
+  }
+}
